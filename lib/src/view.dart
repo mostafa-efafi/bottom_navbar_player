@@ -46,6 +46,7 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
   }
 
   Widget _sliderContainer() {
+    const textStyle = TextStyle(fontSize: 10, color: Colors.white);
     return ValueListenableBuilder<ProgressBarState>(
         valueListenable: widget.bloc.progressNotifier,
         builder: (context, value, _) {
@@ -70,12 +71,12 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
                     left: 8,
                     child: Text(
                         _makeStandardValueLable(value.current.toString()),
-                        style: const TextStyle(fontSize: 10))),
+                        style: textStyle)),
                 Positioned(
                     bottom: 0,
                     right: 8,
                     child: Text(_makeStandardValueLable(value.total.toString()),
-                        style: const TextStyle(fontSize: 10)))
+                        style: textStyle))
               ],
             ),
           );
@@ -88,6 +89,36 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.max,
       children: [
         FloatingActionButton(
+          onPressed: () => widget.bloc.moveFor5Second(isForward: false),
+          elevation: 0,
+          heroTag: null,
+          mini: true,
+          // ignore: sort_child_properties_last
+          child: const Icon(
+            Icons.replay_5_rounded,
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.white12,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        ValueListenableBuilder<ButtonState>(
+          valueListenable: widget.bloc.buttonNotifier,
+          builder: (_, value, __) {
+            return FloatingActionButton(
+              backgroundColor: Colors.white12,
+              elevation: 0,
+              heroTag: null,
+              onPressed: onPressPlayButton(value),
+              child: playButtonChildGeneratior(value),
+            );
+          },
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        FloatingActionButton(
           onPressed: () => widget.bloc.moveFor5Second(isForward: true),
           elevation: 0,
           heroTag: null,
@@ -99,63 +130,6 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
           ),
           backgroundColor: Colors.white12,
         ),
-        const SizedBox(
-          width: 10,
-        ),
-        ValueListenableBuilder<ButtonState>(
-          valueListenable: widget.bloc.buttonNotifier,
-          builder: (_, value, __) {
-            switch (value) {
-              case ButtonState.loading:
-                return FloatingActionButton(
-                  backgroundColor: Colors.white12,
-                  elevation: 0,
-                  heroTag: null,
-                  child: const CircularProgressIndicator(),
-                  onPressed: widget.bloc.play,
-                );
-              case ButtonState.stoped:
-                return FloatingActionButton(
-                  backgroundColor: Colors.white12,
-                  elevation: 0,
-                  heroTag: null,
-                  child: const Icon(Icons.play_arrow_rounded),
-                  onPressed: widget.bloc.play,
-                );
-              case ButtonState.paused:
-                return FloatingActionButton(
-                  backgroundColor: Colors.white12,
-                  elevation: 0,
-                  heroTag: null,
-                  child: const Icon(Icons.play_arrow_rounded),
-                  onPressed: widget.bloc.pause,
-                );
-              case ButtonState.playing:
-                return FloatingActionButton(
-                  backgroundColor: Colors.white12,
-                  elevation: 0,
-                  heroTag: null,
-                  child: const Icon(Icons.pause_rounded),
-                  onPressed: widget.bloc.pause,
-                );
-            }
-          },
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        FloatingActionButton(
-          onPressed: () => widget.bloc.moveFor5Second(isForward: false),
-          elevation: 0,
-          heroTag: null,
-          mini: true,
-          // ignore: sort_child_properties_last
-          child: const Icon(
-            Icons.replay_5_rounded,
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.white12,
-        )
       ],
     );
   }
@@ -163,5 +137,31 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
   String _makeStandardValueLable(String value) {
     final list = value.split('.');
     return list.first;
+  }
+
+  Widget playButtonChildGeneratior(ButtonState state) {
+    switch (state) {
+      case ButtonState.loading:
+        return const CircularProgressIndicator();
+      case ButtonState.stoped:
+        return const Icon(Icons.play_arrow_rounded);
+      case ButtonState.paused:
+        return const Icon(Icons.play_arrow_rounded);
+      case ButtonState.playing:
+        return const Icon(Icons.pause_rounded);
+    }
+  }
+
+  void Function() onPressPlayButton(ButtonState state) {
+    switch (state) {
+      case ButtonState.loading:
+        return widget.bloc.play;
+      case ButtonState.stoped:
+        return widget.bloc.play;
+      case ButtonState.paused:
+        return widget.bloc.pause;
+      case ButtonState.playing:
+        return widget.bloc.pause;
+    }
   }
 }
