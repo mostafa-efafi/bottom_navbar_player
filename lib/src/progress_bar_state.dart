@@ -1,3 +1,4 @@
+/// setted with [progressNotifier]
 class ProgressBarState {
   ProgressBarState({
     required this.current,
@@ -9,6 +10,7 @@ class ProgressBarState {
   final Duration total;
 }
 
+/// setted with [buttonNotifier]
 enum ButtonState {
   paused,
   playing,
@@ -16,4 +18,5 @@ enum ButtonState {
   stoped,
 }
 
+/// setted with [speedNotifier]
 enum PlaySpeed { play1x, play2x }

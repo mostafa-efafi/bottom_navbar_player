@@ -99,6 +99,7 @@ class Bloc {
     });
   }
 
+  /// play with 3 type of SourceType
   play({String? inputFilePath, SourceType? sourceType}) async {
     /// If [sourceType] is not empty, use it, otherwise, use [_lastSourceType]
     if (sourceType != null) {
@@ -129,8 +130,8 @@ class Bloc {
     buttonNotifier.value = ButtonState.stoped;
   }
 
+  /// Move playback progress [forward] 5 seconds or [backward] 5 seconds
   Future<void> moveFor5Second({required bool isForward}) async {
-    /// Move playback progress [forward] 5 seconds or [backward] 5 seconds
     final currentPosition = progressNotifier.value.current.inMilliseconds;
     final total = progressNotifier.value.total.inMilliseconds;
     final move = isForward ? 5000 : -5000; //miliseconds
@@ -144,8 +145,8 @@ class Bloc {
     seek(position);
   }
 
+  /// To [pause] or [rePlay] the sound
   Future<void> pause() async {
-    /// To [pause] or [rePlay] the sound
     if (buttonNotifier.value == ButtonState.paused &&
         progressNotifier.value.current != Duration.zero) {
       await audioPlayer.play();
@@ -175,10 +176,12 @@ class Bloc {
     speedNotifier.value = speed;
   }
 
+  /// player seek method
   void seek(Duration position) {
     audioPlayer.seek(position);
   }
 
+  /// To display the [slider] value correctly
   double sliderDoubleConvertor(
       {required Duration position, required Duration audioDuration}) {
     if (audioDuration.inMilliseconds != 0) {

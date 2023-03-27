@@ -29,8 +29,6 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,12 +60,16 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
                   divisions: 500,
                   label: _makeStandardValueLable('${value.current}'),
                 ),
+
+                /// [value.current]
                 Positioned(
                     bottom: 0,
                     left: 8,
                     child: Text(
                         _makeStandardValueLable(value.current.toString()),
                         style: textStyle)),
+
+                /// [value.total]
                 Positioned(
                     bottom: 0,
                     right: 8,
@@ -182,6 +184,7 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
     );
   }
 
+  /// makeStandard slider lable
   String _makeStandardValueLable(String value) {
     final list = value.split('.');
     return list.first;

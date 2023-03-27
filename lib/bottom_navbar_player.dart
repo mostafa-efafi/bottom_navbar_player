@@ -33,4 +33,3 @@ class BottomNavBarPlayer {
 }
 
 enum SourceType { asset, file, url }
-
