@@ -60,9 +60,9 @@ If you use an internet URL:
 
 If you use the File:
 ```xml
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
-    <!-- or -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
+<!-- or -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 ```
 
 
