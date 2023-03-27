@@ -1,7 +1,7 @@
 name: bottom_navbar_player
 description: A Flutter plugin to play media in BottomNavigationBar.
 version: 0.0.1
-homepage:
+homepage: https://github.com/mostafa-efafi/bottom_navbar_player
 
 environment:
   sdk: '>=2.19.4 <3.0.0'
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  just_audio: ^0.9.32
 
 dev_dependencies:
   flutter_test:
