@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, sort_child_properties_last
 
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +29,11 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    widget.bloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,6 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
                       position: value.current, audioDuration: value.total),
                   onChanged: (inChangeVal) =>
                       widget.bloc.seek(value.total * inChangeVal),
-                  // onChangeEnd: (value) => _bloc!.onChangeEndSlider(value),
                   thumbColor: Colors.white,
                   activeColor: Colors.red,
                   inactiveColor: Colors.grey[600],
@@ -88,12 +88,33 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
+        /// [Play speed] button
+        SizedBox(
+          width: 32,
+          height: 32,
+          child: FloatingActionButton(
+            onPressed: () => widget.bloc.moveFor5Second(isForward: false),
+            elevation: 0,
+            heroTag: null,
+            mini: true,
+            backgroundColor: Colors.white12,
+            child: Icon(
+              Icons.speed_rounded,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+
+        /// Play button from [5 seconds ago]
         FloatingActionButton(
           onPressed: () => widget.bloc.moveFor5Second(isForward: false),
           elevation: 0,
           heroTag: null,
           mini: true,
-          // ignore: sort_child_properties_last
           child: const Icon(
             Icons.replay_5_rounded,
             color: Colors.white,
@@ -103,6 +124,8 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
         const SizedBox(
           width: 10,
         ),
+
+        /// [play] and [pause] button
         ValueListenableBuilder<ButtonState>(
           valueListenable: widget.bloc.buttonNotifier,
           builder: (_, value, __) {
@@ -118,17 +141,39 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
         const SizedBox(
           width: 10,
         ),
+
+        /// Play button from the [next 5 seconds]
         FloatingActionButton(
           onPressed: () => widget.bloc.moveFor5Second(isForward: true),
           elevation: 0,
           heroTag: null,
           mini: true,
-          // ignore: sort_child_properties_last
           child: const Icon(
             Icons.forward_5_rounded,
             color: Colors.white,
           ),
           backgroundColor: Colors.white12,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+
+        /// [stop] button
+        SizedBox(
+          width: 32,
+          height: 32,
+          child: FloatingActionButton(
+            onPressed: () => widget.bloc.stop(),
+            elevation: 0,
+            heroTag: null,
+            mini: true,
+            child: const Icon(
+              Icons.stop_rounded,
+              size: 20,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.white12,
+          ),
         ),
       ],
     );
