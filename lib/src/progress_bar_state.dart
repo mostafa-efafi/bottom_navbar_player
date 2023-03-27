@@ -9,6 +9,11 @@ class ProgressBarState {
   final Duration total;
 }
 
-enum ButtonState { paused, playing, loading, stoped }
+enum ButtonState {
+  paused,
+  playing,
+  loading,
+  stoped,
+}
 
-enum SourceType { asset, file, url }
+enum PlaySpeed { play1x, play2x }
