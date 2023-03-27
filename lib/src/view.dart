@@ -29,11 +29,7 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    widget.bloc.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
