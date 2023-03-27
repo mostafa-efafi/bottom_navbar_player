@@ -89,21 +89,28 @@ class _ViewState extends State<View> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.max,
       children: [
         /// [Play speed] button
-        SizedBox(
-          width: 32,
-          height: 32,
-          child: FloatingActionButton(
-            onPressed: () => widget.bloc.moveFor5Second(isForward: false),
-            elevation: 0,
-            heroTag: null,
-            mini: true,
-            backgroundColor: Colors.white12,
-            child: Icon(
-              Icons.speed_rounded,
-              size: 20,
-              color: Colors.white,
-            ),
-          ),
+        ValueListenableBuilder<PlaySpeed>(
+          valueListenable: widget.bloc.speedNotifier,
+          builder: (_, value, __) {
+            return SizedBox(
+              width: 32,
+              height: 32,
+              child: FloatingActionButton(
+                onPressed: () => widget.bloc.setPlayerSpeed(
+                    value == PlaySpeed.play2x
+                        ? PlaySpeed.play1x
+                        : PlaySpeed.play2x),
+                elevation: 0,
+                heroTag: null,
+                mini: true,
+                backgroundColor: Colors.white12,
+                child: Text(
+                  value == PlaySpeed.play2x ? '1X' : '2X',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900),
+                ),
+              ),
+            );
+          },
         ),
         const SizedBox(
           width: 10,
