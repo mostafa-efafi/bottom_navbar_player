@@ -20,7 +20,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    /// create an instance of the class
     final bottomNavBarPlayer = BottomNavBarPlayer();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -54,6 +56,8 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         )),
+
+        ///Set the player widget for [bottomNavigationBar] or [bottomSheet] scaffold
         bottomSheet: bottomNavBarPlayer.view(),
       ),
     );
