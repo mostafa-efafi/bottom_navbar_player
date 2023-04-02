@@ -24,16 +24,24 @@ class AudioPlayerWidget extends StatelessWidget {
             textDirection: TextDirection.ltr,
             child: Stack(
               children: [
-                Slider.adaptive(
-                  value: bloc.sliderDoubleConvertor(
-                      position: value.current, audioDuration: value.total),
-                  onChanged: (inChangeVal) =>
-                      bloc.seek(value.total * inChangeVal),
-                  thumbColor: Colors.white,
-                  activeColor: Colors.red,
-                  inactiveColor: Colors.grey[600],
-                  divisions: 500,
-                  label: _makeStandardValueLable('${value.current}'),
+                SliderTheme(
+                  data: SliderThemeData(
+                      trackHeight: 7,
+                      overlayColor: Colors.red,
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 7),
+                      valueIndicatorColor: Colors.grey.shade800),
+                  child: Slider.adaptive(
+                    value: bloc.sliderDoubleConvertor(
+                        position: value.current, audioDuration: value.total),
+                    onChanged: (inChangeVal) =>
+                        bloc.seek(value.total * inChangeVal),
+                    thumbColor: Colors.white,
+                    activeColor: Colors.red,
+                    inactiveColor: Colors.grey[600],
+                    divisions: 200,
+                    label: _makeStandardValueLable('${value.current}'),
+                  ),
                 ),
 
                 /// [value.current]
