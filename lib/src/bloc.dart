@@ -1,20 +1,24 @@
+import 'dart:developer';
+
 import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:video_player/video_player.dart';
 
 class Bloc {
+  MediaType? mediaType;
   late SourceType? _lastSourceType;
-  final AudioPlayer audioPlayer = AudioPlayer();
+  late AudioPlayer audioPlayer;
+  late VideoPlayerController videoPlayerController;
 
   /// used singleton design pattern
   static final _bloc = Bloc._initFunction();
 
-  Bloc._initFunction() {
-    _init();
-  }
+  Bloc._initFunction();
 
-  factory Bloc() {
+  factory Bloc({MediaType? mediaType}) {
+    _bloc.mediaType = mediaType;
     return _bloc;
   }
 
@@ -39,8 +43,19 @@ class Bloc {
     buttonNotifier.dispose();
   }
 
+  Future<void> _initVideoPlayer() async {
+    videoPlayerController = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
+    await videoPlayerController
+        .initialize(); /* .then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      }); */
+  }
+
   /// Preparing initial values of listeners
-  void _init() async {
+  Future<void> _initAudioPlayer() async {
+    audioPlayer = AudioPlayer();
     audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
@@ -101,6 +116,18 @@ class Bloc {
 
   /// play with 3 type of SourceType
   play({String? inputFilePath, SourceType? sourceType}) async {
+    if (mediaType == MediaType.audio) {
+      _initAudioPlayer().whenComplete(
+          () async => await _playAudio(sourceType, inputFilePath));
+    } else {
+      _initVideoPlayer()
+          .whenComplete(() async => await videoPlayerController.play());
+      buttonNotifier.value = ButtonState.playing;
+      print('playvideo');
+    }
+  }
+
+  Future<void> _playAudio(SourceType? sourceType, String? inputFilePath) async {
     /// If [sourceType] is not empty, use it, otherwise, use [_lastSourceType]
     if (sourceType != null) {
       _lastSourceType = sourceType;
