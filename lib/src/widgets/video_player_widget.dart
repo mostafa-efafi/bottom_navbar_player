@@ -32,7 +32,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           future: widget.bloc.initVideoPlayer(),
           builder: (context, snapshot) {
             return snapshot.connectionState == ConnectionState.done
-                ? Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // alignment: Alignment.center,
                     children: [
                       // Expanded(
@@ -245,9 +246,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void Function() onPressPlayButton(ButtonState state) {
     switch (state) {
       case ButtonState.loading:
-        return widget.bloc.play;
+        return widget.bloc.startPlaying;
       case ButtonState.stoped:
-        return widget.bloc.play;
+        return widget.bloc.startPlaying;
       case ButtonState.paused:
         return widget.bloc.pause;
       case ButtonState.playing:

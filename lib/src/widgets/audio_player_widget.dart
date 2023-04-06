@@ -189,9 +189,9 @@ class AudioPlayerWidget extends StatelessWidget {
   void Function() onPressPlayButton(ButtonState state) {
     switch (state) {
       case ButtonState.loading:
-        return bloc.play;
+        return bloc.startPlaying;
       case ButtonState.stoped:
-        return bloc.play;
+        return bloc.startPlaying;
       case ButtonState.paused:
         return bloc.pause;
       case ButtonState.playing:
