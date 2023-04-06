@@ -2,6 +2,7 @@
 
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
 import 'package:bottom_navbar_player/src/widgets/audio_player_widget.dart';
+import 'package:bottom_navbar_player/src/widgets/video_player_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc.dart';
@@ -31,10 +32,14 @@ class _ViewState extends State<View> {
   Widget build(BuildContext context) {
     return Container(
       /// for normal [audioPlayer] [110],
-      height: 110,
+      height:300,
       color: Colors.grey[900],
-      child: AudioPlayerWidget(
-          bloc: widget.bloc, progressBarState: widget.progressBarState),
+      child: VideoPlayerWidget(
+          bloc: widget.bloc,
+          progressBarState: widget
+              .progressBarState)
+          /* AudioPlayerWidget(
+              bloc: widget.bloc, progressBarState: widget.progressBarState) */,
     );
   }
 }

@@ -15,32 +15,25 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late GlobalKey<ScaffoldState> _stateKey;
-  // late VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
     _stateKey = GlobalKey<ScaffoldState>();
     widget.bloc.stateKey = _stateKey;
-    // _controller = VideoPlayerController.network(
-    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-    //   ..initialize().then((_) {
-    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //     setState(() {});
-    //   });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey.shade900,
       key: _stateKey,
       body: FutureBuilder(
           future: widget.bloc.initVideoPlayer(),
           builder: (context, snapshot) {
             return snapshot.connectionState == ConnectionState.done
-                ? Stack(
-                    alignment: Alignment.bottomCenter,
+                ? Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // alignment: Alignment.center,
                     children: [
                       // Expanded(
                       //     child: FlutterLogo(
@@ -54,13 +47,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                                   widget.bloc.videoPlayerController),
                             )
                           : Container(),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [_sliderContainer(), _controllerButtons()],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [_sliderContainer(), _controllerButtons()],
+                        ),
                       ),
                     ],
                   )
-                : CircularProgressIndicator();
+                : const Center(child: CircularProgressIndicator());
           }),
     );
   }
@@ -82,6 +78,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     /// [value.current]
                     Text(_makeStandardValueLable(value.current.toString()),
                         style: textStyle),
+
+                    /// [Slider]
                     SliderTheme(
                       data: SliderThemeData(
                           trackHeight: 7,
@@ -177,7 +175,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 mini: true,
                 elevation: 0,
                 heroTag: null,
-                onPressed:()=> widget.bloc.videoPlayerController.play()/* onPressPlayButton(value) */,
+                onPressed: () => widget.bloc.videoPlayerController
+                    .play() /* onPressPlayButton(value) */,
                 child: playButtonChildGeneratior(value),
               );
             },
