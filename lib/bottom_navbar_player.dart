@@ -30,7 +30,9 @@ class BottomNavBarPlayer {
   void play(String path,
       {SourceType? sourceType = SourceType.url, required MediaType mediaType}) {
     _bloc.mediaType = mediaType;
-    _bloc.play(inputFilePath: path, sourceType: sourceType!);
+    _bloc.inputFilePath = path;
+    _bloc.sourceType = sourceType;
+    _bloc.startPlaying();
   }
 }
 
