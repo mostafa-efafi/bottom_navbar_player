@@ -34,18 +34,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             return snapshot.connectionState == ConnectionState.done
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // alignment: Alignment.center,
                     children: [
-                      // Expanded(
-                      //     child: FlutterLogo(
-                      //   size: 200,
-                      // )),
                       widget.bloc.videoPlayerController.value.isInitialized
-                          ? AspectRatio(
-                              aspectRatio: widget
-                                  .bloc.videoPlayerController.value.aspectRatio,
-                              child: VideoPlayer(
-                                  widget.bloc.videoPlayerController),
+                          ? Stack(
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: widget.bloc.videoPlayerController
+                                      .value.aspectRatio,
+                                  child: VideoPlayer(
+                                      widget.bloc.videoPlayerController),
+                                ),
+                                _closeButton(),
+                              ],
                             )
                           : Container(),
                       Align(
@@ -222,6 +222,30 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         ],
       ),
     );
+  }
+
+  Widget _closeButton() {
+    return Positioned(
+        right: 10,
+        top: 10,
+        child: SizedBox(
+          height: 30,
+          width: 30,
+          child: FloatingActionButton(
+            onPressed: () {
+              /// TODO [Add function for close video player]
+            },
+            backgroundColor: Colors.black12,
+            elevation: 0,
+            mini: true,
+            heroTag: null,
+            child: const Icon(
+              Icons.close_rounded,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+        ));
   }
 
   /// makeStandard slider lable
