@@ -1,4 +1,6 @@
-import 'dart:developer';
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'dart:io';
 
 import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
@@ -8,16 +10,26 @@ import 'package:video_player/video_player.dart';
 
 class Bloc {
   MediaType? mediaType;
+  String? inputFilePath;
+  SourceType? sourceType;
   late SourceType? _lastSourceType;
   late AudioPlayer audioPlayer;
   late VideoPlayerController videoPlayerController;
+  GlobalKey<ScaffoldState>? stateKey;
 
   /// used singleton design pattern
   static final _bloc = Bloc._initFunction();
 
   Bloc._initFunction();
 
-  factory Bloc({MediaType? mediaType}) {
+  factory Bloc(
+      {MediaType? mediaType,
+      GlobalKey<ScaffoldState>? stateKey,
+      String? inputFilePath,
+      SourceType? sourceType}) {
+    _bloc.sourceType = sourceType;
+    _bloc.inputFilePath = inputFilePath;
+    _bloc.stateKey = stateKey;
     _bloc.mediaType = mediaType;
     return _bloc;
   }
@@ -43,14 +55,51 @@ class Bloc {
     buttonNotifier.dispose();
   }
 
-  Future<void> _initVideoPlayer() async {
-    videoPlayerController = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
-    await videoPlayerController
-        .initialize(); /* .then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      }); */
+  /// used on View with [FutureBuilder]
+  Future<void> initVideoPlayer() async {
+    buttonNotifier.value = ButtonState.loading;
+    switch (sourceType) {
+      /// [sourceType = URL]
+      case SourceType.url:
+        videoPlayerController = VideoPlayerController.network(inputFilePath!);
+        break;
+
+      /// [sourceType = file]
+      case SourceType.file:
+        videoPlayerController =
+            VideoPlayerController.file(File(inputFilePath!));
+        break;
+
+      /// [sourceType = asset]
+      case SourceType.asset:
+        videoPlayerController = VideoPlayerController.asset(inputFilePath!);
+        break;
+      default:
+    }
+    await videoPlayerController.initialize();
+
+    /// TODO
+    // videoPlayerController.addListener(updateSeeker);
+
+    // videoPlayerController.addListener(() {
+    //   progressNotifier.value = ProgressBarState(
+    //     current: videoPlayerController.notifyListeners(),
+    //     buffered: oldState.buffered,
+    //     total: oldState.total,
+    //   );
+    // });
+  }
+
+  updateSeeker() async {
+    // TODO
+    final newPosition = videoPlayerController.value.position;
+    final buffered =
+        Duration.zero /* videoPlayerController.value.buffered.first.end */;
+    final total = videoPlayerController.value.duration;
+
+    progressNotifier.value = ProgressBarState(
+        current: newPosition, buffered: buffered, total: total);
+    // position = newPosition;
   }
 
   /// Preparing initial values of listeners
@@ -115,19 +164,20 @@ class Bloc {
   }
 
   /// play with 3 type of SourceType
-  play({String? inputFilePath, SourceType? sourceType}) async {
+  startPlaying() async {
     if (mediaType == MediaType.audio) {
-      _initAudioPlayer().whenComplete(
-          () async => await _playAudio(sourceType, inputFilePath));
+      _initAudioPlayer().whenComplete(() async => await _playAudio());
     } else {
-      _initVideoPlayer()
-          .whenComplete(() async => await videoPlayerController.play());
-      buttonNotifier.value = ButtonState.playing;
+      // TODO
+      initVideoPlayer().whenComplete(() {
+        videoPlayerController.play();
+        buttonNotifier.value = ButtonState.playing;
+      });
       print('playvideo');
     }
   }
 
-  Future<void> _playAudio(SourceType? sourceType, String? inputFilePath) async {
+  Future<void> _playAudio() async {
     /// If [sourceType] is not empty, use it, otherwise, use [_lastSourceType]
     if (sourceType != null) {
       _lastSourceType = sourceType;
@@ -153,7 +203,11 @@ class Bloc {
 
   /// changed play state to [stop]
   void stop() {
-    audioPlayer.stop();
+    if (mediaType == MediaType.audio) {
+      audioPlayer.stop();
+    } else {
+      videoPlayerController.dispose();
+    }
     buttonNotifier.value = ButtonState.stoped;
   }
 
@@ -174,6 +228,14 @@ class Bloc {
 
   /// To [pause] or [rePlay] the sound
   Future<void> pause() async {
+    if (mediaType == MediaType.audio) {
+      await _pauseAudio();
+    } else {
+      videoPlayerController.pause();
+    }
+  }
+
+  Future<void> _pauseAudio() async {
     if (buttonNotifier.value == ButtonState.paused &&
         progressNotifier.value.current != Duration.zero) {
       await audioPlayer.play();

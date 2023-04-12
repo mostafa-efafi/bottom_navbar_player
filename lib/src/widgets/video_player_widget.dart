@@ -28,37 +28,38 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       key: _stateKey,
-      body: FutureBuilder(
-          future: widget.bloc.initVideoPlayer(),
-          builder: (context, snapshot) {
-            return snapshot.connectionState == ConnectionState.done
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      widget.bloc.videoPlayerController.value.isInitialized
-                          ? Stack(
-                              children: [
-                                AspectRatio(
-                                  aspectRatio: widget.bloc.videoPlayerController
-                                      .value.aspectRatio,
-                                  child: VideoPlayer(
-                                      widget.bloc.videoPlayerController),
-                                ),
-                                _closeButton(),
-                              ],
-                            )
-                          : Container(),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [_sliderContainer(), _controllerButtons()],
-                        ),
+      body: ValueListenableBuilder(
+        valueListenable: widget.bloc.buttonNotifier,
+        builder: (BuildContext _, value, Widget? __) {
+          return value == ButtonState.loading
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    widget.bloc.videoPlayerController.value.isInitialized
+                        ? Stack(
+                            children: [
+                              AspectRatio(
+                                aspectRatio: widget.bloc.videoPlayerController
+                                    .value.aspectRatio,
+                                child: VideoPlayer(
+                                    widget.bloc.videoPlayerController),
+                              ),
+                              _closeButton(),
+                            ],
+                          )
+                        : Container(),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [_sliderContainer(), _controllerButtons()],
                       ),
-                    ],
-                  )
-                : const Center(child: CircularProgressIndicator());
-          }),
+                    ),
+                  ],
+                );
+        },
+      ),
     );
   }
 
@@ -66,7 +67,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     const textStyle = TextStyle(fontSize: 10, color: Colors.white);
     return ValueListenableBuilder<ProgressBarState>(
         valueListenable: widget.bloc.progressNotifier,
-        builder: (context, value, _) {
+        builder: (BuildContext _, value, Widget? __) {
           return Directionality(
             textDirection: TextDirection.ltr,
             child: Padding(
@@ -176,8 +177,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 mini: true,
                 elevation: 0,
                 heroTag: null,
-                onPressed: () => widget.bloc.videoPlayerController
-                    .play() /* onPressPlayButton(value) */,
+                onPressed: () => value == ButtonState.playing
+                    ? widget.bloc.pause()
+                    : widget.bloc.startPlaying() /* onPressPlayButton(value) */,
                 child: playButtonChildGeneratior(value),
               );
             },
@@ -233,7 +235,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           width: 30,
           child: FloatingActionButton(
             onPressed: () {
-              /// TODO [Add function for close video player]
+              widget.bloc.stop();
             },
             backgroundColor: Colors.black12,
             elevation: 0,
@@ -274,7 +276,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       case ButtonState.stoped:
         return widget.bloc.startPlaying;
       case ButtonState.paused:
-        return widget.bloc.pause;
+        return widget.bloc.startPlaying;
       case ButtonState.playing:
         return widget.bloc.pause;
     }
