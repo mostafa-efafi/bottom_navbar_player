@@ -11,12 +11,7 @@ class ProgressBarState {
 }
 
 /// setted with [buttonNotifier]
-enum ButtonState {
-  paused,
-  playing,
-  loading,
-  stoped,
-}
+enum ButtonState { paused, playing, loading, stoped, error }
 
 /// setted with [speedNotifier]
 enum PlaySpeed { play1x, play2x }
