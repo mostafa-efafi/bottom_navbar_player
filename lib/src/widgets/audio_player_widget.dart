@@ -10,8 +10,16 @@ class AudioPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [_sliderContainer(), _controllerButtons()],
+    return ValueListenableBuilder(
+      valueListenable: bloc.buttonNotifier,
+      builder: (BuildContext _, value, Widget? __) {
+        return Column(
+          children: [
+            value == ButtonState.error ? _errorWidget() : _sliderContainer(),
+            _controllerButtons()
+          ],
+        );
+      },
     );
   }
 
@@ -167,6 +175,16 @@ class AudioPlayerWidget extends StatelessWidget {
     );
   }
 
+  /// This widget is displayed when it is [not connected to the Internet]
+  Expanded _errorWidget() {
+    return const Expanded(
+      child: Icon(
+        Icons.wifi_off_rounded,
+        color: Colors.white,
+      ),
+    );
+  }
+
   /// makeStandard slider lable
   String _makeStandardValueLable(String value) {
     final list = value.split('.');
@@ -183,6 +201,8 @@ class AudioPlayerWidget extends StatelessWidget {
         return const Icon(Icons.play_arrow_rounded);
       case ButtonState.playing:
         return const Icon(Icons.pause_rounded);
+      case ButtonState.error:
+        return const Icon(Icons.error_outline_rounded);
     }
   }
 
@@ -196,6 +216,8 @@ class AudioPlayerWidget extends StatelessWidget {
         return bloc.pause;
       case ButtonState.playing:
         return bloc.pause;
+      case ButtonState.error:
+        return () {};
     }
   }
 }
