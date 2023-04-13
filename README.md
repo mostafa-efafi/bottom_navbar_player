@@ -2,7 +2,10 @@
 A Flutter plugin to play media in BottomNavigationBar and bottomSheet with `file`, `web` and `asset` playback capabilities.
 Simply play sounds in different input methods in the list or anywhere else.
 
-![](demo.gif)
+<p align="left">
+    <img src="demo_audio_player.gif" alt="preview" width="315"/>
+    <img src="demo_video_player.gif" alt="preview" width="315"/>
+</p>
 
 ### Getting Started
 In order to use this package, do import
