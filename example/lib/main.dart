@@ -23,36 +23,111 @@ class _MyAppState extends State<MyApp> {
     /// create an instance of the class
     final bottomNavBarPlayer = BottomNavBarPlayer();
 
+    const titleStyle = TextStyle(
+        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17);
+    final boxDecoration = BoxDecoration(
+        color: Colors.grey.shade100, borderRadius: BorderRadius.circular(12));
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Bottom NavBar Player'),
         ),
         body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            /// For when the sound is played over the http URL [sourceType: SourceType.url]
-            MaterialButton(
-              onPressed: () => bottomNavBarPlayer.play(
-                  'https://download.samplelib.com/mp3/sample-9s.mp3',
-                  sourceType: SourceType.url),
-              child: const Text('play from URL'),
+            /// [video Player] container
+            Container(
+              padding: const EdgeInsets.all(25),
+              decoration: boxDecoration,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Video Player',
+                    style: titleStyle,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  /// For when the [video] is played over the http URL [sourceType: SourceType.url]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play(
+                        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+                        sourceType: SourceType.url,
+                        mediaType: MediaType.video),
+                    child: const Text('from URL'),
+                  ),
+
+                  /// For when the [video] is played over the asset path [sourceType: SourceType.asset]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play('assets/bee.mp4',
+                        sourceType: SourceType.asset,
+                        mediaType: MediaType.video),
+                    child: const Text('from Asset'),
+                  ),
+
+                  /// For when the [video] is played through the file stored in the memory [sourceType: SourceType.file]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play(
+                        '/storage/sdcard/Download/bee.mp4',
+                        sourceType: SourceType.file,
+                        mediaType: MediaType.video),
+                    child: const Text('from File'),
+                  ),
+                ],
+              ),
             ),
 
-            /// For when the sound is played over the asset path [sourceType: SourceType.asset]
-            MaterialButton(
-              onPressed: () => bottomNavBarPlayer.play('assets/audio.mp3',
-                  sourceType: SourceType.asset),
-              child: const Text('play from Asset'),
-            ),
+            /// [Audio Player] container
+            Container(
+              padding: const EdgeInsets.all(25),
+              decoration: boxDecoration,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Audio Player',
+                    style: titleStyle,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
 
-            /// For when the sound is played through the file stored in the memory [sourceType: SourceType.file]
-            MaterialButton(
-              onPressed: () => bottomNavBarPlayer.play(
-                  '/storage/sdcard/Download/audio_file.mp3',
-                  sourceType: SourceType.file),
-              child: const Text('play from File'),
+                  /// For when the [audio] is played over the http URL [sourceType: SourceType.url]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play(
+                        'https://download.samplelib.com/mp3/sample-9s.mp3',
+                        sourceType: SourceType.url,
+                        mediaType: MediaType.audio),
+                    child: const Text('from URL'),
+                  ),
+
+                  /// For when the [audio] is played over the asset path [sourceType: SourceType.asset]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play('assets/audio.mp3',
+                        sourceType: SourceType.asset,
+                        mediaType: MediaType.audio),
+                    child: const Text('from Asset'),
+                  ),
+
+                  /// For when the [audio] is played through the file stored in the memory [sourceType: SourceType.file]
+                  MaterialButton(
+                    color: Colors.white,
+                    onPressed: () => bottomNavBarPlayer.play(
+                        '/storage/sdcard/Download/audio_file.mp3',
+                        sourceType: SourceType.file,
+                        mediaType: MediaType.audio),
+                    child: const Text('from File'),
+                  ),
+                ],
+              ),
             ),
           ],
         )),

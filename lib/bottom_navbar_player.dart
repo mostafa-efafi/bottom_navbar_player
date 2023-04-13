@@ -27,9 +27,15 @@ class BottomNavBarPlayer {
   }
 
   /// This function is to start the [playback] operation
-  void play(String path, {SourceType? sourceType = SourceType.url}) {
-    _bloc.play(inputFilePath: path, sourceType: sourceType!);
+  void play(String path,
+      {SourceType? sourceType = SourceType.url, required MediaType mediaType}) {
+    _bloc.mediaType = mediaType;
+    _bloc.inputFilePath = path;
+    _bloc.sourceType = sourceType;
+    _bloc.startPlaying();
   }
 }
 
 enum SourceType { asset, file, url }
+
+enum MediaType { audio, video }
