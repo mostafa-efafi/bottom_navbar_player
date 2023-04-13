@@ -31,9 +31,11 @@ class _ViewState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
+    final videoContainerSize = MediaQuery.of(context).size.height * 0.44;
     return Container(
-      /// for normal [audioPlayer] [110],
-      height: 300,
+      /// widget container [size],
+      height:
+          widget.bloc.mediaType == MediaType.audio ? 110 : videoContainerSize,
       color: Colors.grey[900],
       child: widget.bloc.mediaType == MediaType.video
 
