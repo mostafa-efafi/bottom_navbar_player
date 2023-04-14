@@ -1,11 +1,26 @@
-## Bottom NavBar Player
-A Flutter plugin to play media in BottomNavigationBar and bottomSheet with `file`, `web` and `asset` playback capabilities.
+# Bottom NavBar Player
+
+<a href="https://flutter.dev/"><img src="https://img.shields.io/badge/flutter-website-deepskyblue.svg" alt="Flutter Website"></a>
+<a href="https://dart.dev"><img src="https://img.shields.io/badge/dart-website-deepskyblue.svg" alt="Dart Website"></a>
+<a href="https://developer.android.com" style="pointer-events: stroke;" target="_blank">
+<img src="https://img.shields.io/badge/platform-Android-deepskyblue">
+</a>
+<a href="https://developer.apple.com/ios/" style="pointer-events: stroke;" target="_blank">
+<img src="https://img.shields.io/badge/platform-iOS-deepskyblue">
+</a>
+<a href=""><img src="https://app.codacy.com/project/badge/Grade/dc683c9cc61b499fa7cdbf54e4d9ff35"/></a>
+<a href="https://github.com/Mindinventory/vimeo_video_player/blob/master/LICENSE" style="pointer-events: stroke;" target="_blank">
+
+A Flutter plugin to play audio and video in BottomNavigationBar and bottomSheet with `file`, `web` and `asset` playback capabilities.
 Simply play sounds in different input methods in the list or anywhere else.
 
-<p align="left">
-    <img src="demo_audio_player.gif" alt="preview" width="315"/>
-    <img src="demo_video_player.gif" alt="preview" width="315"/>
-</p>
+|             | Android | iOS   | Web   |
+|-------------|---------|-------|-------|
+| **Support** | SDK 16+ | 11.0+ | Any\* |
+
+
+## Preview
+![](demo.gif)
 
 ### Getting Started
 In order to use this package, do import

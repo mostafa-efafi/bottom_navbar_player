@@ -1,12 +1,16 @@
 ## 0.0.1
 
-first release.
+- first release.
 
 ## 0.0.2
 
-improved pub points
+- improved pub points
 
 ## 0.0.3
 
-improved player user interface
-adding the ability to play video
+- improved player user interface
+- adding the ability to play video
+
+## 0.0.4
+
+- improved comments and changelog
