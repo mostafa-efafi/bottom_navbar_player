@@ -2,6 +2,7 @@ import 'package:bottom_navbar_player/src/bloc.dart';
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
 import 'package:flutter/material.dart';
 
+/// This widget is designed for the user interface of the [audio player]
 class AudioPlayerWidget extends StatelessWidget {
   final Bloc bloc;
   final ProgressBarState progressBarState;
@@ -15,6 +16,7 @@ class AudioPlayerWidget extends StatelessWidget {
       builder: (BuildContext _, value, Widget? __) {
         return Column(
           children: [
+            /// if [ButtonState] is [error] The [_errorWidget] is displayed else [_sliderContainer]
             value == ButtonState.error ? _errorWidget() : _sliderContainer(),
             _controllerButtons()
           ],
@@ -23,9 +25,12 @@ class AudioPlayerWidget extends StatelessWidget {
     );
   }
 
+  /// Slider widget to change the duration of the media
   Widget _sliderContainer() {
     const textStyle = TextStyle(fontSize: 10, color: Colors.white);
     return ValueListenableBuilder<ProgressBarState>(
+
+        /// for [progress] value
         valueListenable: bloc.progressNotifier,
         builder: (context, value, _) {
           return Directionality(
@@ -72,6 +77,7 @@ class AudioPlayerWidget extends StatelessWidget {
         });
   }
 
+  /// All the playback control buttons are designed in this area
   Widget _controllerButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -191,6 +197,7 @@ class AudioPlayerWidget extends StatelessWidget {
     return list.first;
   }
 
+  /// generate icon for [play],[pause] button
   Widget playButtonChildGeneratior(ButtonState state) {
     switch (state) {
       case ButtonState.loading:
@@ -206,6 +213,7 @@ class AudioPlayerWidget extends StatelessWidget {
     }
   }
 
+  /// generate function for [play],[pause] button
   void Function() onPressPlayButton(ButtonState state) {
     switch (state) {
       case ButtonState.loading:

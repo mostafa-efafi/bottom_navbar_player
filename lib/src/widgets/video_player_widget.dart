@@ -3,6 +3,7 @@ import 'package:bottom_navbar_player/src/progress_bar_state.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+/// This widget is designed for the user interface of the [video player]
 class VideoPlayerWidget extends StatelessWidget {
   final Bloc bloc;
   final ProgressBarState progressBarState;
@@ -21,8 +22,12 @@ class VideoPlayerWidget extends StatelessWidget {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    bloc.videoPlayerController.value.isInitialized
-                        ? Stack(
+                    !bloc.videoPlayerController.value.isInitialized ||
+                            value == ButtonState.error
+
+                        /// if [ButtonState] is [error] The [_errorWidget] is displayed else [videoPlayer]
+                        ? _errorWidget()
+                        : Stack(
                             children: [
                               AspectRatio(
                                 aspectRatio: bloc
@@ -31,8 +36,7 @@ class VideoPlayerWidget extends StatelessWidget {
                               ),
                               _closeButton(),
                             ],
-                          )
-                        : _errorWidget(),
+                          ),
                     _sliderContainer(),
                     _controllerButtons()
                   ],
@@ -52,6 +56,7 @@ class VideoPlayerWidget extends StatelessWidget {
     ));
   }
 
+  /// Slider widget to change the duration of the media
   Widget _sliderContainer() {
     const textStyle = TextStyle(fontSize: 10, color: Colors.white);
     return ValueListenableBuilder<ProgressBarState>(
@@ -105,6 +110,7 @@ class VideoPlayerWidget extends StatelessWidget {
         });
   }
 
+  /// All the playback control buttons are designed in this area
   Widget _controllerButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -209,6 +215,7 @@ class VideoPlayerWidget extends StatelessWidget {
     );
   }
 
+  /// To [close] the video player widget with [stop] method
   Widget _closeButton() {
     return Positioned(
         right: 10,
@@ -255,6 +262,7 @@ class VideoPlayerWidget extends StatelessWidget {
     }
   }
 
+  /// generate function for [play],[pause] button
   void Function() onPressPlayButton(ButtonState state) {
     switch (state) {
       case ButtonState.loading:

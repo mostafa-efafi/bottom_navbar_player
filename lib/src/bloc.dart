@@ -13,12 +13,14 @@ class Bloc {
   MediaType? mediaType;
   String? inputFilePath;
   SourceType? sourceType;
+
+  /// To check internet connectivity when the input [sourceType] is a [URL]
   final NetworkChecker _networkChecker = NetworkChecker();
   late SourceType? _lastSourceType;
   late AudioPlayer audioPlayer;
   late VideoPlayerController videoPlayerController;
 
-  /// used singleton design pattern
+  /// used [singleton] design pattern
   static final _bloc = Bloc._initFunction();
 
   Bloc._initFunction();
@@ -49,6 +51,7 @@ class Bloc {
     ),
   );
 
+  /// for close [Notifier]
   void dispose() {
     audioPlayer.dispose();
     progressNotifier.dispose();
@@ -57,7 +60,10 @@ class Bloc {
 
   /// [video] play with 3 type of SourceType
   Future<bool> _initVideoPlayer() async {
+    /// It is necessary to check the Internet connection every time the video is played
     final isConnectNetwork = await _networkChecker.checkConnection();
+
+    /// init [ButtonState] is [loading]
     buttonNotifier.value = ButtonState.loading;
     switch (sourceType) {
       /// [sourceType = URL]
@@ -78,29 +84,36 @@ class Bloc {
       default:
     }
 
+    /// If the device is [not connected] to the Internet and
+    ///  the input source is the [Internet address], initialization for the controller is not done
     if (isConnectNetwork == false && sourceType == SourceType.url) {
       return false;
     } else {
       /// init videoPlayer controller
       await videoPlayerController.initialize();
 
-      /// start videpPlayer listener
+      /// start videpPlayer [listener]
       videoPlayerController.addListener(_videoPlayerListener);
       return true;
     }
   }
 
+  /// video Listener To synchronize the slider
   _videoPlayerListener() async {
+    /// [current position]
     final newPosition = videoPlayerController.value.position;
+
+    /// The [total] duration of the video
     final total = videoPlayerController.value.duration;
 
+    /// Video [buffered] duration
     final buffered = _getVideoBuffered(total);
 
     progressNotifier.value = ProgressBarState(
         current: newPosition, buffered: buffered, total: total);
-    // position = newPosition;
   }
 
+  /// Get the [last buffered value]
   Duration _getVideoBuffered(Duration total) {
     int maxBuffering = 0;
     for (DurationRange range in videoPlayerController.value.buffered) {
@@ -176,6 +189,8 @@ class Bloc {
 
   /// public method for start playing media
   startPlaying() async {
+    /// If the input media type is [audio], the [audioController] is [initialized],
+    ///  otherwise, the [videoController] is [initialized].
     if (mediaType == MediaType.audio) {
       _initAudioPlayer().whenComplete(() async => await _playAudio());
     } else {
@@ -223,6 +238,7 @@ class Bloc {
 
   /// changed play state to [stop]
   void stop() {
+    /// If the input media type is [audio], the sound will [stop], otherwise the [video] will [dispose]
     if (mediaType == MediaType.audio) {
       audioPlayer.stop();
     } else {
@@ -246,8 +262,9 @@ class Bloc {
     seek(position);
   }
 
-  /// To [pause] or [rePlay] the sound
+  /// To [pause] or [rePlay] the media
   Future<void> pause() async {
+    /// If the input media type is [audio], the sound will [pause], otherwise the [video] will [pause]
     if (mediaType == MediaType.audio) {
       await _pauseAudio();
     } else {
@@ -285,8 +302,8 @@ class Bloc {
     }
   }
 
+  /// Set [playback speed] (currently 2x)
   Future<void> setPlayerSpeed(PlaySpeed speed) async {
-    /// Set [playback speed] (currently 2x)
     double doubleSpeed = 1.0;
     switch (speed) {
       case PlaySpeed.play1x:
