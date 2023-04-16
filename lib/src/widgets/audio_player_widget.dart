@@ -11,6 +11,7 @@ class AudioPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Get instant [buttonNotifier] information and user interface update
     return ValueListenableBuilder(
       valueListenable: bloc.buttonNotifier,
       builder: (BuildContext _, value, Widget? __) {
@@ -83,7 +84,7 @@ class AudioPlayerWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        /// [Play speed] button
+        /// Get instant [speedNotifier] information and user interface update
         ValueListenableBuilder<PlaySpeed>(
           valueListenable: bloc.speedNotifier,
           builder: (_, value, __) {

@@ -14,6 +14,8 @@ class VideoPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
+
+      /// Get instant [buttonNotifier] information and user interface update
       body: ValueListenableBuilder(
         valueListenable: bloc.buttonNotifier,
         builder: (BuildContext _, value, Widget? __) {
@@ -29,6 +31,7 @@ class VideoPlayerWidget extends StatelessWidget {
                         ? _errorWidget()
                         : Stack(
                             children: [
+                              /// [video Player]
                               AspectRatio(
                                 aspectRatio: bloc
                                     .videoPlayerController.value.aspectRatio,
@@ -116,7 +119,7 @@ class VideoPlayerWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        /// [Play speed] button
+        /// Get instant [speedNotifier] information and user interface update
         ValueListenableBuilder<PlaySpeed>(
           valueListenable: bloc.speedNotifier,
           builder: (_, value, __) {
