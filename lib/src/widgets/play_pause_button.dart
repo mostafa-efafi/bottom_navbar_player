@@ -17,6 +17,9 @@ class _PlayPuaseButtonState extends State<PlayPuaseButton>
   @override
   void initState() {
     super.initState();
+
+    /// Initializing the [animation controller]  with a duration of [500] [milliseconds]
+    ///  for each animation run
     controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -32,14 +35,27 @@ class _PlayPuaseButtonState extends State<PlayPuaseButton>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.state == ButtonState.paused) {
+    /// For the [stoped] and [paused] state mode, the animation is [forwarded]
+    ///  and for the [playing] mode, the animation is [reversed]
+    if (widget.state == ButtonState.paused ||
+        widget.state == ButtonState.stoped) {
       controller.forward();
-    } else {
+    } else if (widget.state == ButtonState.playing) {
       controller.reverse();
     }
-    return AnimatedIcon(
-      icon: AnimatedIcons.pause_play,
-      progress: animation,
-    );
+
+    /// For the [loading] state mode, the [CircularProgressIndicator] is displayed
+    if (widget.state == ButtonState.loading) {
+      return const CircularProgressIndicator();
+    } else if (widget.state == ButtonState.error) {
+      /// And if there is no connection to the Internet in [error] mode,
+      ///  the error icon will be displayed
+      return const Icon(Icons.error_outline_rounded);
+    } else {
+      return AnimatedIcon(
+        icon: AnimatedIcons.pause_play,
+        progress: animation,
+      );
+    }
   }
 }
