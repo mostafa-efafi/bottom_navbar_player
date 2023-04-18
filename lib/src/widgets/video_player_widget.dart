@@ -1,5 +1,6 @@
 import 'package:bottom_navbar_player/src/bloc.dart';
 import 'package:bottom_navbar_player/src/progress_bar_state.dart';
+import 'package:bottom_navbar_player/src/widgets/play_pause_button.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -173,7 +174,9 @@ class VideoPlayerWidget extends StatelessWidget {
               elevation: 0,
               heroTag: null,
               onPressed: onPressPlayButton(value),
-              child: playButtonChildGeneratior(value),
+
+              /// generate icon for [play],[pause] button
+              child: PlayPuaseButton(state: value),
             );
           },
         ),
@@ -247,22 +250,6 @@ class VideoPlayerWidget extends StatelessWidget {
   String _makeStandardValueLable(String value) {
     final list = value.split('.');
     return list.first;
-  }
-
-  /// generate icon for [play],[pause] button
-  Widget playButtonChildGeneratior(ButtonState state) {
-    switch (state) {
-      case ButtonState.loading:
-        return const CircularProgressIndicator();
-      case ButtonState.stoped:
-        return const Icon(Icons.play_arrow_rounded);
-      case ButtonState.paused:
-        return const Icon(Icons.play_arrow_rounded);
-      case ButtonState.playing:
-        return const Icon(Icons.pause_rounded);
-      case ButtonState.error:
-        return const Icon(Icons.error_outline_rounded);
-    }
   }
 
   /// generate function for [play],[pause] button
