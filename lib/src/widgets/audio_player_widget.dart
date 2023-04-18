@@ -138,7 +138,9 @@ class AudioPlayerWidget extends StatelessWidget {
               elevation: 0,
               heroTag: null,
               onPressed: onPressPlayButton(value),
-              child: playButtonChildGeneratior(value),
+
+              /// generate icon for [play],[pause] button
+              child: PlayPuaseButton(state: value),
             );
           },
         ),
@@ -193,28 +195,12 @@ class AudioPlayerWidget extends StatelessWidget {
     );
   }
 
-  /// makeStandard slider lable
+  /// make Standard slider lable
   String _makeStandardValueLable(String value) {
     final list = value.split('.');
     return list.first;
   }
 
-  /// generate icon for [play],[pause] button
-  Widget playButtonChildGeneratior(ButtonState state) {
-    // switch (state) {
-    //   case ButtonState.loading:
-    //     return const CircularProgressIndicator();
-    //   case ButtonState.stoped:
-    //     return const Icon(Icons.play_arrow_rounded);
-    //   case ButtonState.paused:
-    //     return const Icon(Icons.play_arrow_rounded);
-    //   case ButtonState.playing:
-    //     return const Icon(Icons.pause_rounded);
-    //   case ButtonState.error:
-    //     return const Icon(Icons.error_outline_rounded);
-    // }
-    return PlayPuaseButton(state:state);
-  }
 
   /// generate function for [play],[pause] button
   void Function() onPressPlayButton(ButtonState state) {
