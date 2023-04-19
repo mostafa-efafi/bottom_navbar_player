@@ -53,9 +53,15 @@ class Bloc {
 
   /// for close [Notifier]
   void dispose() {
-    audioPlayer.dispose();
+    /// dispose [media controller] with input [MediaType]
+    if (mediaType == MediaType.audio) {
+      audioPlayer.dispose();
+    } else {
+      videoPlayerController.dispose();
+    }
     progressNotifier.dispose();
     buttonNotifier.dispose();
+    speedNotifier.dispose();
   }
 
   /// [video] play with 3 type of SourceType
