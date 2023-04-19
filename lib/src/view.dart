@@ -30,6 +30,12 @@ class _ViewState extends State<View> {
   }
 
   @override
+  void dispose() {
+    widget.bloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final videoContainerSize = MediaQuery.of(context).size.height * 0.44;
     return Container(

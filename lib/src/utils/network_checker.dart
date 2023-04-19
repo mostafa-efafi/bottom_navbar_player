@@ -1,8 +1,10 @@
 import 'dart:io';
 
-/// Return [true] if the device was connected to the Internet, otherwise [false]
 class NetworkChecker {
   static const urlTest = 'google.com';
+
+  /// Return [true] if the device was connected to the Internet, otherwise [false]
+  /// It is sent to [Google] [Ping] and the result is returned
   Future<bool> checkConnection() async {
     try {
       final result = await InternetAddress.lookup(urlTest);

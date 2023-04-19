@@ -19,6 +19,7 @@ class BottomNavBarPlayer {
               if (buttonState == ButtonState.stoped) {
                 return const SizedBox();
               } else {
+                /// Displayed [view] widget when [ButtonState] is [not equal to stop]
                 return View(bloc: _bloc, progressBarState: progressBarState);
               }
             });
@@ -36,6 +37,8 @@ class BottomNavBarPlayer {
   }
 }
 
+/// The file input type is selected in the following ways
 enum SourceType { asset, file, url }
 
+/// The media type is selected in one of the following ways
 enum MediaType { audio, video }

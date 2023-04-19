@@ -8,8 +8,6 @@
 <a href="https://developer.apple.com/ios/" style="pointer-events: stroke;" target="_blank">
 <img src="https://img.shields.io/badge/platform-iOS-deepskyblue">
 </a>
-<a href=""><img src="https://app.codacy.com/project/badge/Grade/dc683c9cc61b499fa7cdbf54e4d9ff35"/></a>
-<a href="https://github.com/Mindinventory/vimeo_video_player/blob/master/LICENSE" style="pointer-events: stroke;" target="_blank">
 
 A Flutter plugin to play audio and video in BottomNavigationBar and bottomSheet with `file`, `web` and `asset` playback capabilities.
 Simply play sounds in different input methods in the list or anywhere else.
@@ -107,8 +105,9 @@ MaterialButton(
 ```
 
 
-### Permissions
+### Permissions and configuration
 
+#### Android
 If you use an internet URL:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -120,7 +119,21 @@ If you use the File:
 <!-- or -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 ```
+If you wish to connect to non-HTTPS URLS, or if you use a feature that depends on the proxy such as headers, caching or stream audio sources, also add the following attribute to the `application` element:
+```xml
+<application ... android:usesCleartextTraffic="true">
+```
+#### iOS
 
+If you wish to connect to non-HTTPS URLS, or if you use a feature that depends on the proxy such as headers, caching or stream audio sources, add the following to your `Info.plist` file:
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+```
 
 
 ### License
