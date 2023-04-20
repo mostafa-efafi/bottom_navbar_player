@@ -22,27 +22,32 @@ class VideoPlayerWidget extends StatelessWidget {
         builder: (BuildContext _, value, Widget? __) {
           return value == ButtonState.loading
               ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              : Stack(
                   children: [
-                    !bloc.videoPlayerController.value.isInitialized ||
-                            value == ButtonState.error
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        !bloc.videoPlayerController.value.isInitialized ||
+                                value == ButtonState.error
 
-                        /// if [ButtonState] is [error] The [_errorWidget] is displayed else [videoPlayer]
-                        ? _errorWidget()
-                        : Stack(
-                            children: [
-                              /// [video Player]
-                              AspectRatio(
+                            /// if [ButtonState] is [error] The [_errorWidget] is displayed else [videoPlayer]
+                            ? _errorWidget()
+                            /// [Video player] Flexibled for any sizes and any aspectRatios
+                            : Flexible(
+                              child: AspectRatio(
                                 aspectRatio: bloc
                                     .videoPlayerController.value.aspectRatio,
-                                child: VideoPlayer(bloc.videoPlayerController),
+                                child: VideoPlayer(
+                                  bloc.videoPlayerController,
+                                ),
                               ),
-                              _closeButton(),
-                            ],
-                          ),
-                    _sliderContainer(),
-                    _controllerButtons()
+                            ),
+                        _sliderContainer(),
+                        _controllerButtons()
+                      ],
+                    ),
+                    _closeButton(),
                   ],
                 );
         },

@@ -59,15 +59,22 @@ class Bloc {
     } else {
       videoPlayerController.dispose();
     }
-    progressNotifier.dispose();
-    buttonNotifier.dispose();
-    speedNotifier.dispose();
+
+    // progressNotifier.dispose();
+    // buttonNotifier.dispose();
+    // speedNotifier.dispose();
   }
 
   /// [video] play with 3 type of SourceType
   Future<bool> _initVideoPlayer() async {
     /// It is necessary to check the Internet connection every time the video is played
     final isConnectNetwork = await _networkChecker.checkConnection();
+
+    try {
+      videoPlayerController.dispose();
+    } catch (e) {
+      /// [videoPlayerController] [not initialized] with previous playe
+    }
 
     /// init [ButtonState] is [loading]
     buttonNotifier.value = ButtonState.loading;
@@ -134,6 +141,11 @@ class Bloc {
 
   /// Preparing initial values of listeners
   Future<void> _initAudioPlayer() async {
+    try {
+      audioPlayer.stop();
+    } catch (e) {
+      /// [audioPlayer] [not initialized] with previous playe
+    }
     audioPlayer = AudioPlayer();
     audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
