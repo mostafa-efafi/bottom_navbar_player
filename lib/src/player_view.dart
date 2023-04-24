@@ -8,20 +8,20 @@ import 'package:flutter/material.dart';
 
 import 'bloc.dart';
 
-class View extends StatefulWidget {
+class PlayerView extends StatefulWidget {
   final Bloc bloc;
   final ProgressBarState progressBarState;
-  const View({
+  const PlayerView({
     Key? key,
     required this.progressBarState,
     required this.bloc,
   }) : super(key: key);
 
   @override
-  _ViewState createState() => _ViewState();
+  _PlayerViewState createState() => _PlayerViewState();
 }
 
-class _ViewState extends State<View> {
+class _PlayerViewState extends State<PlayerView> {
   late Animation animation;
 
   @override
