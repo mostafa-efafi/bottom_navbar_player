@@ -201,7 +201,6 @@ class AudioPlayerWidget extends StatelessWidget {
     return list.first;
   }
 
-
   /// generate function for [play],[pause] button
   void Function() onPressPlayButton(ButtonState state) {
     switch (state) {

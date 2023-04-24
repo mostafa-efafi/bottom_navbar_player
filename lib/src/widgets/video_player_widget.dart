@@ -33,16 +33,17 @@ class VideoPlayerWidget extends StatelessWidget {
 
                             /// if [ButtonState] is [error] The [_errorWidget] is displayed else [videoPlayer]
                             ? _errorWidget()
+
                             /// [Video player] Flexibled for any sizes and any aspectRatios
                             : Flexible(
-                              child: AspectRatio(
-                                aspectRatio: bloc
-                                    .videoPlayerController.value.aspectRatio,
-                                child: VideoPlayer(
-                                  bloc.videoPlayerController,
+                                child: AspectRatio(
+                                  aspectRatio: bloc
+                                      .videoPlayerController.value.aspectRatio,
+                                  child: VideoPlayer(
+                                    bloc.videoPlayerController,
+                                  ),
                                 ),
                               ),
-                            ),
                         _sliderContainer(),
                         _controllerButtons()
                       ],
