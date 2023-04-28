@@ -1,5 +1,5 @@
 import 'package:bottom_navbar_player/src/bloc.dart';
-import 'package:bottom_navbar_player/src/progress_bar_state.dart';
+import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/widgets/play_pause_button.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:bottom_navbar_player/src/progress_bar_state.dart';
+import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:flutter/material.dart';
 
 class PlayPuaseButton extends StatefulWidget {

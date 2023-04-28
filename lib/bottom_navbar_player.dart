@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:bottom_navbar_player/src/bloc.dart';
-import 'package:bottom_navbar_player/src/progress_bar_state.dart';
+import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/player_view.dart';
 import 'package:flutter/material.dart';
 
