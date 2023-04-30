@@ -32,6 +32,7 @@ class VideoPlayerWidget extends StatelessWidget {
                   return buttonNotifierValue == ButtonState.loading
                       ? const Center(child: CircularProgressIndicator())
                       : Stack(
+                          alignment: Alignment.bottomCenter,
                           children: [
                             Column(
                               mainAxisSize: MainAxisSize.max,
@@ -56,10 +57,19 @@ class VideoPlayerWidget extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+
+                                /// [SizedBox] to display the [_sliderContainer] and [_controllerButtons] more correctly
+                                SizedBox(
+                                  height: videoScreenModeValue ==
+                                          VideoScreenMode.min
+                                      ? kToolbarHeight
+                                      : 0,
+                                )
                               ],
                             ),
                             _closeAndMaximizeButton(),
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 _sliderContainer(),
                                 _controllerButtons(),
