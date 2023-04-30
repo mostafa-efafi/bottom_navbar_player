@@ -216,6 +216,8 @@ class Bloc {
     if (mediaType == MediaType.audio) {
       _initAudioPlayer().whenComplete(() async => await _playAudio());
     } else {
+      ///  default [video] [screen] [size]
+      videoScreenModeNotifier.value = VideoScreenMode.min;
       _initVideoPlayer().then((value) {
         if (value == true) {
           videoPlayerController.play();
