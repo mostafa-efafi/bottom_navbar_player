@@ -1,5 +1,6 @@
 import 'package:bottom_navbar_player/src/bloc.dart';
 import 'package:bottom_navbar_player/src/player_state.dart';
+import 'package:bottom_navbar_player/src/utils/constants.dart';
 import 'package:bottom_navbar_player/src/widgets/play_pause_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +14,21 @@ class AudioPlayerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Get instant [buttonNotifier] information and user interface update
-    return ValueListenableBuilder(
-      valueListenable: bloc.buttonNotifier,
-      builder: (BuildContext _, value, Widget? __) {
-        return Column(
-          children: [
-            /// if [ButtonState] is [error] The [_errorWidget] is displayed else [_sliderContainer]
-            value == ButtonState.error ? _errorWidget() : _sliderContainer(),
-            _controllerButtons()
-          ],
-        );
-      },
+    return Container(
+      color: Constants.PLAYER_BACKGROUND_COLOR,
+      height: 110,
+      child: ValueListenableBuilder(
+        valueListenable: bloc.buttonNotifier,
+        builder: (BuildContext _, value, Widget? __) {
+          return Column(
+            children: [
+              /// if [ButtonState] is [error] The [_errorWidget] is displayed else [_sliderContainer]
+              value == ButtonState.error ? _errorWidget() : _sliderContainer(),
+              _controllerButtons()
+            ],
+          );
+        },
+      ),
     );
   }
 
