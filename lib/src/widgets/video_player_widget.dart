@@ -117,7 +117,7 @@ class VideoPlayerWidget extends StatelessWidget {
                     SliderTheme(
                       data: SliderThemeData(
                           trackHeight: 7,
-                          overlayColor: Colors.red,
+                          overlayColor: Constants.SLIDER_OVERLAY_COLER,
                           thumbShape: const RoundSliderThumbShape(
                               enabledThumbRadius: 7),
                           valueIndicatorColor: Colors.grey.shade800),
@@ -128,9 +128,9 @@ class VideoPlayerWidget extends StatelessWidget {
                               audioDuration: value.total),
                           onChanged: (inChangeVal) =>
                               bloc.seek(value.total * inChangeVal),
-                          thumbColor: Colors.white,
-                          activeColor: Colors.red,
-                          inactiveColor: Colors.grey[600],
+                          thumbColor: Constants.SLIDER_THUMB_COLOR,
+                          activeColor: Constants.SLIDER_OVERLAY_COLER,
+                          inactiveColor: Constants.SLIDER_INACTIVE_COLOR,
                           divisions: 200,
                           label: _makeStandardValueLable('${value.current}'),
                         ),
@@ -171,8 +171,7 @@ class VideoPlayerWidget extends StatelessWidget {
                 backgroundColor: Colors.white12,
                 child: Text(
                   value == PlaySpeed.play2x ? '1X' : '2X',
-                  style: const TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w900),
+                  style: Constants.CONTROLLER_BUTTON_TEXT_STYLE,
                 ),
               ),
             );
