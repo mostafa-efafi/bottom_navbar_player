@@ -34,7 +34,6 @@ class AudioPlayerWidget extends StatelessWidget {
 
   /// Slider widget to change the duration of the media
   Widget _sliderContainer() {
-    const textStyle = TextStyle(fontSize: 10, color: Colors.white);
     return ValueListenableBuilder<ProgressBarState>(
 
         /// for [progress] value
@@ -47,18 +46,19 @@ class AudioPlayerWidget extends StatelessWidget {
                 SliderTheme(
                   data: SliderThemeData(
                       trackHeight: 7,
-                      overlayColor: Colors.red,
+                      overlayColor: Constants.SLIDER_OVERLAY_COLER,
                       thumbShape:
                           const RoundSliderThumbShape(enabledThumbRadius: 7),
-                      valueIndicatorColor: Colors.grey.shade800),
+                      valueIndicatorColor:
+                          Constants.SLIDER_VALUE_INDICATORCOLOR),
                   child: Slider.adaptive(
                     value: bloc.sliderDoubleConvertor(
                         position: value.current, audioDuration: value.total),
                     onChanged: (inChangeVal) =>
                         bloc.seek(value.total * inChangeVal),
-                    thumbColor: Colors.white,
-                    activeColor: Colors.red,
-                    inactiveColor: Colors.grey[600],
+                    thumbColor: Constants.SLIDER_THUMB_COLOR,
+                    activeColor: Constants.SLIDER_OVERLAY_COLER,
+                    inactiveColor: Constants.SLIDER_INACTIVE_COLOR,
                     divisions: 200,
                     label: _makeStandardValueLable('${value.current}'),
                   ),
@@ -70,14 +70,14 @@ class AudioPlayerWidget extends StatelessWidget {
                     left: 8,
                     child: Text(
                         _makeStandardValueLable(value.current.toString()),
-                        style: textStyle)),
+                        style: Constants.SLIDER_TEXT_STYLE)),
 
                 /// [value.total]
                 Positioned(
                     bottom: 0,
                     right: 8,
                     child: Text(_makeStandardValueLable(value.total.toString()),
-                        style: textStyle))
+                        style: Constants.SLIDER_TEXT_STYLE))
               ],
             ),
           );
@@ -107,8 +107,7 @@ class AudioPlayerWidget extends StatelessWidget {
                 backgroundColor: Colors.white12,
                 child: Text(
                   value == PlaySpeed.play2x ? '1X' : '2X',
-                  style: const TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w900),
+                  style: Constants.CONTROLLER_BUTTON_TEXT_STYLE,
                 ),
               ),
             );
