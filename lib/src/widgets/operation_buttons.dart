@@ -1,3 +1,4 @@
+import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/bloc.dart';
 import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/utils/constants.dart';
@@ -8,10 +9,13 @@ import 'package:flutter/material.dart';
 /// All the playback control buttons are designed in this area
 class OperationButtons extends StatelessWidget {
   final Bloc bloc;
-  const OperationButtons({super.key, required this.bloc});
+  final MediaType mediaType;
+  const OperationButtons(
+      {super.key, required this.bloc, required this.mediaType});
 
   @override
   Widget build(BuildContext context) {
+    final miniButton = mediaType == MediaType.video ? true : false;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -67,6 +71,7 @@ class OperationButtons extends StatelessWidget {
               backgroundColor: Colors.white12,
               elevation: 0,
               heroTag: null,
+              mini: miniButton,
               onPressed: Tools.onPressPlayButton(value, bloc),
 
               /// generate icon for [play],[pause] button
