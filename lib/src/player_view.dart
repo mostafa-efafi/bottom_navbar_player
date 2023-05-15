@@ -2,8 +2,8 @@
 
 import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/player_state.dart';
-import 'package:bottom_navbar_player/src/widgets/audio_player_widget.dart';
-import 'package:bottom_navbar_player/src/widgets/video_player_widget.dart';
+import 'package:bottom_navbar_player/src/widgets/player_ui/audio_player_widget.dart';
+import 'package:bottom_navbar_player/src/widgets/player_ui/video_player_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc.dart';

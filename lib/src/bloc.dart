@@ -63,10 +63,6 @@ class Bloc {
     } else {
       videoPlayerController.dispose();
     }
-
-    // progressNotifier.dispose();
-    // buttonNotifier.dispose();
-    // speedNotifier.dispose();
   }
 
   /// [video] play with 3 type of SourceType
@@ -366,6 +362,7 @@ class Bloc {
     }
   }
 
+  /// Switch between [VideoScreenMode]
   void videoScreenModeSwitcher() {
     final currentMode = videoScreenModeNotifier.value;
     if (currentMode == VideoScreenMode.min) {

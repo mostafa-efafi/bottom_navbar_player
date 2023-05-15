@@ -113,16 +113,23 @@ class VideoPlayerWidget extends StatelessWidget {
           height: 30,
           child: Row(
             children: [
-              FloatingActionButton(
-                onPressed: () => bloc.videoScreenModeSwitcher(),
-                backgroundColor: Colors.black12,
-                elevation: 0,
-                mini: true,
-                heroTag: null,
-                child: const Icon(
-                  Icons.fullscreen_rounded,
-                  color: Colors.white,
-                ),
+              ValueListenableBuilder(
+                valueListenable: bloc.videoScreenModeNotifier,
+                builder: (_, VideoScreenMode value, __) {
+                  return FloatingActionButton(
+                    onPressed: () => bloc.videoScreenModeSwitcher(),
+                    backgroundColor: Colors.black12,
+                    elevation: 0,
+                    mini: true,
+                    heroTag: null,
+                    child: Icon(
+                      value == VideoScreenMode.min
+                          ? Icons.fullscreen_rounded
+                          : Icons.fullscreen_exit_rounded,
+                      color: Colors.white,
+                    ),
+                  );
+                },
               ),
               FloatingActionButton(
                 onPressed: () => bloc.stop(),
