@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:bottom_navbar_player/src/bloc.dart';
-import 'package:bottom_navbar_player/src/progress_bar_state.dart';
-import 'package:bottom_navbar_player/src/view.dart';
+import 'package:bottom_navbar_player/src/player_state.dart';
+import 'package:bottom_navbar_player/src/player_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarPlayer {
@@ -20,7 +20,8 @@ class BottomNavBarPlayer {
                 return const SizedBox();
               } else {
                 /// Displayed [view] widget when [ButtonState] is [not equal to stop]
-                return View(bloc: _bloc, progressBarState: progressBarState);
+                return PlayerView(
+                    bloc: _bloc, progressBarState: progressBarState);
               }
             });
       },

@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:bottom_navbar_player/bottom_navbar_player.dart';
-import 'package:bottom_navbar_player/src/progress_bar_state.dart';
+import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/utils/network_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -42,6 +42,10 @@ class Bloc {
   /// [Playback speed states]
   final speedNotifier = ValueNotifier<PlaySpeed>(PlaySpeed.play1x);
 
+  /// [Video screen Size state]
+  final videoScreenModeNotifier =
+      ValueNotifier<VideoScreenMode>(VideoScreenMode.min);
+
   /// [Play progress values]
   final progressNotifier = ValueNotifier<ProgressBarState>(
     ProgressBarState(
@@ -59,10 +63,6 @@ class Bloc {
     } else {
       videoPlayerController.dispose();
     }
-
-    // progressNotifier.dispose();
-    // buttonNotifier.dispose();
-    // speedNotifier.dispose();
   }
 
   /// [video] play with 3 type of SourceType
@@ -212,6 +212,8 @@ class Bloc {
     if (mediaType == MediaType.audio) {
       _initAudioPlayer().whenComplete(() async => await _playAudio());
     } else {
+      ///  default [video] [screen] [size]
+      videoScreenModeNotifier.value = VideoScreenMode.min;
       _initVideoPlayer().then((value) {
         if (value == true) {
           videoPlayerController.play();
@@ -357,6 +359,16 @@ class Bloc {
       return res;
     } else {
       return 0;
+    }
+  }
+
+  /// Switch between [VideoScreenMode]
+  void videoScreenModeSwitcher() {
+    final currentMode = videoScreenModeNotifier.value;
+    if (currentMode == VideoScreenMode.min) {
+      videoScreenModeNotifier.value = VideoScreenMode.max;
+    } else {
+      videoScreenModeNotifier.value = VideoScreenMode.min;
     }
   }
 }
