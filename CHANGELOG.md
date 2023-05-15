@@ -26,3 +26,7 @@
 - Added full screen mode for video play
 - Improved user interface
 - Fix bugs
+
+## 0.0.7
+
+- updated pubspec file
