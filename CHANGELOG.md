@@ -20,3 +20,9 @@
 - Fixed the bug of replaying media without pausing the currently playing media
 - The play and pause buttons were designed as animations
 - Fixed the problem of playing videos with different aspect ratio
+
+## 0.0.6
+
+- Added full screen mode for video play
+- Improved user interface
+- Fix bugs
