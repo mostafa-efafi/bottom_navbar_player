@@ -30,3 +30,7 @@
 ## 0.0.7
 
 - updated pubspec file
+
+## 0.0.8
+
+- Necessary files were added to the project
