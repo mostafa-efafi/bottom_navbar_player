@@ -16,5 +16,3 @@ enum ButtonState { paused, playing, loading, stoped, error }
 /// setted with [speedNotifier]
 enum PlaySpeed { play1x, play2x }
 
-/// For display size of [player widget]
-enum VideoScreenMode { min, max }
