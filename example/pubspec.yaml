@@ -2,17 +2,18 @@ name: bottom_navbar_player_example
 description: Demonstrates how to use the bottom_navbar_player plugin.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-homepage: https://github.com/mostafa-efafi/bottom_navbar_player/tree/master/example
-version: 1.0.0+1
+
 environment:
-  sdk: '>=2.19.4 <4.0.0'
+  sdk: '>=2.19.4 <3.0.0'
 
 
 dependencies:
   flutter:
     sdk: flutter
 
-  bottom_navbar_player: ^0.0.5
+  bottom_navbar_player:
+
+    path: ../
 
   cupertino_icons: ^1.0.2
 
