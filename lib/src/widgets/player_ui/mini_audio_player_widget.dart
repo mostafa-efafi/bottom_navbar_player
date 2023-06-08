@@ -5,6 +5,7 @@ import 'package:bottom_navbar_player/src/utils/tools.dart';
 import 'package:bottom_navbar_player/src/widgets/slider_container.dart';
 import 'package:flutter/material.dart';
 
+/// This widget is designed for the user interface of the [mini] [audio player]
 class MiniAudioPlayerWidget extends StatelessWidget {
   final Bloc bloc;
   final ProgressBarState progressBarState;
@@ -16,6 +17,7 @@ class MiniAudioPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Get instant [buttonNotifier] information and user interface update
     return ValueListenableBuilder<ButtonState>(
         valueListenable: bloc.buttonNotifier,
         builder: (_, buttonStateValue, __) {
@@ -30,13 +32,18 @@ class MiniAudioPlayerWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    /// [opration] [button]
                     _playButton(bloc, context),
                     const SizedBox(
                       width: 7,
                     ),
+
+                    /// show file name
                     _fileNameContainer(bloc),
                   ],
                 ),
+
+                /// [slider]
                 showPlayer
                     ? Expanded(child: SliderContainer(bloc: bloc))
                     : const SizedBox(),
@@ -48,10 +55,7 @@ class MiniAudioPlayerWidget extends StatelessWidget {
   }
 }
 
-// Widget _playerWidget(Bloc bloc, ProgressBarState progressBarValue) {
-//  ;
-// }
-
+/// convert file [path] or [url] to [file name]
 SizedBox _fileNameContainer(Bloc bloc) {
   return SizedBox(
     width: 50,
@@ -79,6 +83,7 @@ InkWell _closeBtn(Bloc bloc) {
   );
 }
 
+/// button for show [paly],[loading],[paused],[error] state
 Widget _playButton(Bloc bloc, BuildContext context) {
   final iconColor = Theme.of(context).primaryColor;
   return Padding(
@@ -119,6 +124,8 @@ Widget _playButton(Bloc bloc, BuildContext context) {
                 color: iconColor,
               ),
             );
+
+          /// if [ButtonState] is [error]
           case ButtonState.error:
             return InkWell(
               onTap: () {},
