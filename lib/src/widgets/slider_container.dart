@@ -1,3 +1,4 @@
+import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/bloc.dart';
 import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/utils/constants.dart';
@@ -10,7 +11,7 @@ class SliderContainer extends StatelessWidget {
   const SliderContainer({super.key, required this.bloc});
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 10, color: Colors.white);
+    const textStyle = TextStyle(fontSize: 10, color: Colors.white54);
     return ValueListenableBuilder<ProgressBarState>(
         valueListenable: bloc.progressNotifier,
         builder: (BuildContext _, value, Widget? __) {
@@ -24,8 +25,15 @@ class SliderContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     /// [value.current]
-                    Text(Tools.makeStandardValueLable(value.current.toString()),
-                        style: textStyle),
+                    bloc.playerSize == PlayerSize.min &&
+                            bloc.mediaType == MediaType.audio
+
+                        /// for [audio player] [min] size
+                        ? const SizedBox()
+                        : Text(
+                            Tools.makeStandardValueLable(
+                                value.current.toString()),
+                            style: textStyle),
 
                     /// [Slider]
                     SliderTheme(
@@ -52,14 +60,36 @@ class SliderContainer extends StatelessWidget {
                       ),
                     ),
 
-                    /// [value.total]
-                    Text(Tools.makeStandardValueLable(value.total.toString()),
-                        style: textStyle)
+                    /// [value.total] show when [!] [mini] [audioPlayer]
+                    bloc.playerSize == PlayerSize.min &&
+                            bloc.mediaType == MediaType.audio
+
+                        /// for [audio player] [min] size
+                        ? _remainingContainer(value, textStyle)
+                        : Text(
+                            Tools.makeStandardValueLable(
+                                value.total.toString()),
+                            style: textStyle)
                   ],
                 ),
               ),
             ),
           );
         });
+  }
+
+  /// foe show [remaining] audio time
+  SizedBox _remainingContainer(
+      ProgressBarState progressBarValue, TextStyle textStyle) {
+    return SizedBox(
+      width: 35,
+      child: Center(
+        child: Text(
+          Tools.makeStandardValueLable(
+              '${Tools.getRemainingTime(current: progressBarValue.current, total: progressBarValue.total)}'),
+          style: textStyle,
+        ),
+      ),
+    );
   }
 }

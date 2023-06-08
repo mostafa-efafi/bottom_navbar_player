@@ -1,6 +1,6 @@
 name: bottom_navbar_player
 description: A Flutter plugin to play Audio and Video in BottomNavigationBar and bottomSheet with file, web and asset playback capabilities.
-version: 0.0.8
+version: 0.1.0
 homepage: https://github.com/mostafa-efafi/bottom_navbar_player
 
 environment:

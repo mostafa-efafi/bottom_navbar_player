@@ -30,10 +30,13 @@ class BottomNavBarPlayer {
 
   /// This function is to start the [playback] operation
   void play(String path,
-      {SourceType? sourceType = SourceType.url, required MediaType mediaType}) {
+      {SourceType? sourceType = SourceType.url,
+      required MediaType mediaType,
+      PlayerSize? playerSize =PlayerSize.min }) {
     _bloc.mediaType = mediaType;
     _bloc.inputFilePath = path;
     _bloc.sourceType = sourceType;
+    _bloc.playerSize = playerSize;
     _bloc.startPlaying();
   }
 }
@@ -43,3 +46,6 @@ enum SourceType { asset, file, url }
 
 /// The media type is selected in one of the following ways
 enum MediaType { audio, video }
+
+/// For display size of [player widget]
+enum PlayerSize { min, max }
