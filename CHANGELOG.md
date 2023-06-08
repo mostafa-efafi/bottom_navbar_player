@@ -30,3 +30,11 @@
 ## 0.0.7
 
 - updated pubspec file
+
+## 0.0.8
+
+- Necessary files were added to the project
+
+## 0.1.0
+
+- Playing audio and video in 2 sizes, small and large
