@@ -32,11 +32,11 @@ class BottomNavBarPlayer {
   void play(String path,
       {SourceType? sourceType = SourceType.url,
       required MediaType mediaType,
-      PlayerSize? playerSize}) {
+      PlayerSize? playerSize =PlayerSize.min }) {
     _bloc.mediaType = mediaType;
     _bloc.inputFilePath = path;
     _bloc.sourceType = sourceType;
-    _bloc.playerSize = playerSize!;
+    _bloc.playerSize = playerSize;
     _bloc.startPlaying();
   }
 }

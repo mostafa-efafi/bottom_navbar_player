@@ -13,6 +13,7 @@ class Bloc {
   MediaType? mediaType;
   String? inputFilePath;
   SourceType? sourceType;
+  PlayerSize? playerSize;
 
   /// To check internet connectivity when the input [sourceType] is a [URL]
   final NetworkChecker _networkChecker = NetworkChecker();
@@ -29,10 +30,12 @@ class Bloc {
       {MediaType? mediaType,
       GlobalKey<ScaffoldState>? stateKey,
       String? inputFilePath,
-      SourceType? sourceType}) {
+      SourceType? sourceType,
+      PlayerSize? playerSize}) {
     _bloc.sourceType = sourceType;
     _bloc.inputFilePath = inputFilePath;
     _bloc.mediaType = mediaType;
+    _bloc.playerSize = playerSize;
     return _bloc;
   }
 
@@ -42,9 +45,8 @@ class Bloc {
   /// [Playback speed states]
   final speedNotifier = ValueNotifier<PlaySpeed>(PlaySpeed.play1x);
 
-  /// [Video screen Size state]
-  final videoScreenModeNotifier =
-      ValueNotifier<VideoScreenMode>(VideoScreenMode.min);
+  /// [Player Size state]
+  final playerSizeNotifier = ValueNotifier<PlayerSize>(PlayerSize.min);
 
   /// [Play progress values]
   final progressNotifier = ValueNotifier<ProgressBarState>(
@@ -207,13 +209,13 @@ class Bloc {
 
   /// public method for start playing media
   startPlaying() async {
+    playerSizeNotifier.value = playerSize!;
+
     /// If the input media type is [audio], the [audioController] is [initialized],
     ///  otherwise, the [videoController] is [initialized].
     if (mediaType == MediaType.audio) {
       _initAudioPlayer().whenComplete(() async => await _playAudio());
     } else {
-      ///  default [video] [screen] [size]
-      videoScreenModeNotifier.value = VideoScreenMode.min;
       _initVideoPlayer().then((value) {
         if (value == true) {
           videoPlayerController.play();
@@ -364,11 +366,11 @@ class Bloc {
 
   /// Switch between [VideoScreenMode]
   void videoScreenModeSwitcher() {
-    final currentMode = videoScreenModeNotifier.value;
-    if (currentMode == VideoScreenMode.min) {
-      videoScreenModeNotifier.value = VideoScreenMode.max;
+    final currentMode = playerSizeNotifier.value;
+    if (currentMode == PlayerSize.min) {
+      playerSizeNotifier.value = PlayerSize.max;
     } else {
-      videoScreenModeNotifier.value = VideoScreenMode.min;
+      playerSizeNotifier.value = PlayerSize.min;
     }
   }
 }

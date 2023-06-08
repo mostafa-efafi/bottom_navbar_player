@@ -23,11 +23,11 @@ class VideoPlayerWidget extends StatelessWidget {
         final minVideoContainerSize = MediaQuery.of(context).size.height * 0.44;
         final maxVideoContainerSize = MediaQuery.of(context).size.height;
         return ValueListenableBuilder(
-            valueListenable: bloc.videoScreenModeNotifier,
+            valueListenable: bloc.playerSizeNotifier,
             builder: (BuildContext _, videoScreenModeValue, Widget? __) {
               return Container(
                 color: Constants.PLAYER_BACKGROUND_COLOR,
-                height: videoScreenModeValue == VideoScreenMode.min
+                height: videoScreenModeValue == PlayerSize.min
                     ? minVideoContainerSize
                     : maxVideoContainerSize,
                 width: MediaQuery.of(context).size.width,
@@ -63,8 +63,7 @@ class VideoPlayerWidget extends StatelessWidget {
 
                                 /// [SizedBox] to display the [_sliderContainer] and [_controllerButtons] more correctly
                                 SizedBox(
-                                  height: videoScreenModeValue ==
-                                          VideoScreenMode.min
+                                  height: videoScreenModeValue == PlayerSize.min
                                       ? kToolbarHeight
                                       : 0,
                                 )
@@ -114,8 +113,8 @@ class VideoPlayerWidget extends StatelessWidget {
           child: Row(
             children: [
               ValueListenableBuilder(
-                valueListenable: bloc.videoScreenModeNotifier,
-                builder: (_, VideoScreenMode value, __) {
+                valueListenable: bloc.playerSizeNotifier,
+                builder: (_, PlayerSize value, __) {
                   return FloatingActionButton(
                     onPressed: () => bloc.videoScreenModeSwitcher(),
                     backgroundColor: Colors.black12,
@@ -123,7 +122,7 @@ class VideoPlayerWidget extends StatelessWidget {
                     mini: true,
                     heroTag: null,
                     child: Icon(
-                      value == VideoScreenMode.min
+                      value == PlayerSize.min
                           ? Icons.fullscreen_rounded
                           : Icons.fullscreen_exit_rounded,
                       color: Colors.white,

@@ -3,6 +3,7 @@
 import 'package:bottom_navbar_player/bottom_navbar_player.dart';
 import 'package:bottom_navbar_player/src/player_state.dart';
 import 'package:bottom_navbar_player/src/widgets/player_ui/audio_player_widget.dart';
+import 'package:bottom_navbar_player/src/widgets/player_ui/mini_audio_player_widget.dart';
 import 'package:bottom_navbar_player/src/widgets/player_ui/video_player_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -43,8 +44,11 @@ class _PlayerViewState extends State<PlayerView> {
         ? VideoPlayerWidget(
             bloc: widget.bloc, progressBarState: widget.progressBarState)
 
-        /// [audio player] UI when mediaType is [MediaType.audio]
-        : AudioPlayerWidget(
-            bloc: widget.bloc, progressBarState: widget.progressBarState);
+        /// [audio player] UI when mediaType is [MediaType.audio] for [mini] and [max] size
+        : widget.bloc.playerSize == PlayerSize.min
+            ? MiniAudioPlayerWidget(
+                bloc: widget.bloc, progressBarState: widget.progressBarState)
+            : AudioPlayerWidget(
+                bloc: widget.bloc, progressBarState: widget.progressBarState);
   }
 }
