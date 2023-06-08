@@ -116,7 +116,7 @@ class VideoPlayerWidget extends StatelessWidget {
                 valueListenable: bloc.playerSizeNotifier,
                 builder: (_, PlayerSize value, __) {
                   return FloatingActionButton(
-                    onPressed: () => bloc.videoScreenModeSwitcher(),
+                    onPressed: () => bloc.playerSizeSwitcher(),
                     backgroundColor: Colors.black12,
                     elevation: 0,
                     mini: true,

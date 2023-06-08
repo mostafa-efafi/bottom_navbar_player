@@ -27,6 +27,8 @@ class SliderContainer extends StatelessWidget {
                     /// [value.current]
                     bloc.playerSize == PlayerSize.min &&
                             bloc.mediaType == MediaType.audio
+
+                        /// for [audio player] [min] size
                         ? const SizedBox()
                         : Text(
                             Tools.makeStandardValueLable(
@@ -61,6 +63,8 @@ class SliderContainer extends StatelessWidget {
                     /// [value.total] show when [!] [mini] [audioPlayer]
                     bloc.playerSize == PlayerSize.min &&
                             bloc.mediaType == MediaType.audio
+
+                        /// for [audio player] [min] size
                         ? _remainingContainer(value, textStyle)
                         : Text(
                             Tools.makeStandardValueLable(
@@ -74,6 +78,7 @@ class SliderContainer extends StatelessWidget {
         });
   }
 
+  /// foe show [remaining] audio time
   SizedBox _remainingContainer(
       ProgressBarState progressBarValue, TextStyle textStyle) {
     return SizedBox(

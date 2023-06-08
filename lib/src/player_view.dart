@@ -46,8 +46,12 @@ class _PlayerViewState extends State<PlayerView> {
 
         /// [audio player] UI when mediaType is [MediaType.audio] for [mini] and [max] size
         : widget.bloc.playerSize == PlayerSize.min
+
+            /// [audio player] [min] size
             ? MiniAudioPlayerWidget(
                 bloc: widget.bloc, progressBarState: widget.progressBarState)
+
+            /// [audio player] [max] size
             : AudioPlayerWidget(
                 bloc: widget.bloc, progressBarState: widget.progressBarState);
   }

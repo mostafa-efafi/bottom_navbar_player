@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () => bottomNavBarPlayer.play(
                         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
                         sourceType: SourceType.url,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.video),
                     child: const Text('from URL'),
                   ),
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.white,
                     onPressed: () => bottomNavBarPlayer.play('assets/bee.mp4',
                         sourceType: SourceType.asset,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.video),
                     child: const Text('from Asset'),
                   ),
@@ -76,8 +78,19 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () => bottomNavBarPlayer.play(
                         '/storage/sdcard/Download/bee.mp4',
                         sourceType: SourceType.file,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.video),
                     child: const Text('from File'),
+                  ),
+
+                  /// For when the [video] is played through the file with [PlayerSize.min]
+                  MaterialButton(
+                    color: Colors.orange.shade200,
+                    onPressed: () => bottomNavBarPlayer.play('assets/bee.mp4',
+                        sourceType: SourceType.asset,
+                        playerSize: PlayerSize.min,
+                        mediaType: MediaType.video),
+                    child: const Text('Min Size'),
                   ),
                 ],
               ),
@@ -104,6 +117,7 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () => bottomNavBarPlayer.play(
                         'https://download.samplelib.com/mp3/sample-9s.mp3',
                         sourceType: SourceType.url,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.audio),
                     child: const Text('from URL'),
                   ),
@@ -113,6 +127,7 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.white,
                     onPressed: () => bottomNavBarPlayer.play('assets/audio.mp3',
                         sourceType: SourceType.asset,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.audio),
                     child: const Text('from Asset'),
                   ),
@@ -123,8 +138,19 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () => bottomNavBarPlayer.play(
                         '/storage/sdcard/Download/audio_file.mp3',
                         sourceType: SourceType.file,
+                        playerSize: PlayerSize.max,
                         mediaType: MediaType.audio),
                     child: const Text('from File'),
+                  ),
+
+                  /// For when the [audio] is played through the file stored with
+                  MaterialButton(
+                    color: Colors.orange.shade200,
+                    onPressed: () => bottomNavBarPlayer.play('assets/audio.mp3',
+                        sourceType: SourceType.asset,
+                        playerSize: PlayerSize.min,
+                        mediaType: MediaType.audio),
+                    child: const Text('Min Size'),
                   ),
                 ],
               ),

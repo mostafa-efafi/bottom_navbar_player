@@ -364,8 +364,8 @@ class Bloc {
     }
   }
 
-  /// Switch between [VideoScreenMode]
-  void videoScreenModeSwitcher() {
+  /// Switch between [playerSize] min , max
+  void playerSizeSwitcher() {
     final currentMode = playerSizeNotifier.value;
     if (currentMode == PlayerSize.min) {
       playerSizeNotifier.value = PlayerSize.max;
